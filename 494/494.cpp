@@ -4,8 +4,8 @@ bool isLetter(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
 }
 main() {
-    char frase[1024];
-    while(gets(frase)) {
+    string frase;
+    while(getline(cin, frase)) {
      int i = 0, cont = 0;
      bool cond = false;
      while(frase[i] != '\0') {
