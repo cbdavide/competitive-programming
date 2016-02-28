@@ -5,23 +5,19 @@ nImages = int(input(''))
 
 while nImages != 0 :
     results = []
-    
+    totalSpaces = 0
     for n in range(0, nImages):
         cont = 0
         line = input('')
-        j = 1
         
-        for char in line:            
-            if char.isspace():
+        for i in range(0, 25):            
+            if line[i].isspace():
                 cont += 1
-            if(j == 25):
-                break
-            j += 1
         results.append(cont)
     
     minVal = min(results)
-    results = list(map((lambda val: val - minVal), results))
-    nSpaces = reduce((lambda x, y: x + y), results)
-    print(nSpaces)
+    for nSpaces in results:
+        totalSpaces += nSpaces - minVal
+    print(totalSpaces)
     nImages = int(input('')) 
 
