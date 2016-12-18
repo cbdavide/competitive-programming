@@ -1,75 +1,80 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define INF_MAX 2147483647
-
 typedef pair<int, int> pii;
+typedef int** matrix;
+typedef bool** memory;
+
+typedef vector<memory> vmemory;
 
 int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
 char mat[1001][1001];
-int paths[1001][1001];
 
-struct node {
-    int x;
-    int y;
-    int level;
+memory init_memory(pii size) {
+    memory m = new bool*[size.first];
 
-    node(int r, int c, int l) {
-        x = r;
-        y = c;
-        level = l;
-    };
-};
-
-void reset_paths(pii size) {
     for(int i=0; i<size.first; i++) {
+
+        m[i] = new bool[size.second];
         for(int j=0; j<size.second; j++)
-            paths[i][j] = INF_MAX;
+            m[i][j] = 0;
     }
+
+    return m;
 }
 
-bool bfs(pii size, pii a, pii b, char type) {
+memory bfs(pii size, pii a, pii b, char type) {
     const int ROW = size.first;
     const int COL = size.second;
 
-    queue<node> q;
-    paths[a.first][a.second] = 0;
+    memory m = init_memory(size);
 
-    q.push(node(a.first, a.second, 0));
+    queue<pii> q;
+    m[a.first][a.second] = 1;
+
+    q.push(pii(a.first, a.second));
 
     while(!q.empty()) {
-        struct node actual = q.front();
+        pii actual = q.front();
         q.pop();
 
         for(int i=0; i<4; i++) {
-            int x = actual.x + dir[i][0];
-            int y = actual.y + dir[i][1];
+            int x = actual.first + dir[i][0];
+            int y = actual.second + dir[i][1];
 
-            if(x >= 0 && x < ROW && y >= 0 && y < COL && mat[x][y] == type && paths[x][y] == INF_MAX) {
-                paths[x][y] = actual.level + 1;
-                q.push(node(x, y, actual.level + 1));
+            if(x >= 0 && x < ROW && y >= 0 && y < COL && mat[x][y] == type && !m[x][y]) {
+                m[x][y] = 1;
+                q.push(pii(x, y));
             }
         }
     }
+    return m;
+}
 
-    return paths[b.first][b.second] != INF_MAX;
+memory find_memory(vmemory arr, pii pos) {
+    for(int i=0; i<arr.size(); i++) {
+        if(arr[i][pos.first][pos.second])
+            return arr[i];
+    }
+    return NULL;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     int r, c, n;
     int x1, y1, x2, y2;
     bool val;
     string answ;
 
+    memory conex_graph;
+    map<char, vmemory> graphs;
+
     cin >> r >> c;
     for(int i = 0; i < r; i++) {
-        for(int j = 0; j < c; j++) {
+        for(int j = 0; j < c; j++)
             cin >> mat[i][j];
-            paths[i][j] = INF_MAX;
-        }
     }
 
     cin >> n;
@@ -81,8 +86,17 @@ int main() {
         pii to(x2, y2);
 
         if(mat[x1][y1] == mat[x2][y2]) {
-             val = bfs(pii(r, c),from, to, mat[x1][y1]);
-             reset_paths(pii(r, c));
+            //The magic happens here
+            char type = mat[x1][y1];
+            conex_graph = find_memory(graphs[type], from);
+
+            if(conex_graph == NULL) {
+                conex_graph = bfs(pii(r, c), from, to, type);
+                graphs[type].push_back(conex_graph);
+            }
+
+            val = conex_graph[to.first][to.second];
+
         } else {
             val = false;
         }
