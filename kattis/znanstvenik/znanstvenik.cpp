@@ -1,24 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool check_invariant(vector<string> arr) {
-    set<string> container(arr.begin(), arr.end());
-    return container.size() == arr.size();
+bool check_invariant(vector<string> &arr, int c) {
+    unordered_set<string> container(arr.begin(), arr.end());
+    return container.size() == c;
 }
 
-void chop(vector<string> &arr) {
-    for(int i=0; i<arr.size(); i++)
+void chop(vector<string> &arr, int c) {
+    for(int i=0; i<c; i++)
         arr[i].erase(0, 1);
-}
-
-void print(vector<string> arr) {
-    int row = arr[0].size();
-    for(int i=0; i<row; i++) {
-        for(int j=0; j<arr.size(); j++) {
-            cout << arr[j][i];
-        }
-        cout << endl;
-    }
 }
 
 int main() {
@@ -32,17 +22,17 @@ int main() {
     cin >> r >> c;
     vector<string> cols(c);
 
-    for(int i=0; i<r; i++) {
+    cin >> temp;
+    for(int i=0; i<r - 1; i++) {
         cin >> temp;
         for(int j=0; j<c; j++) {
             cols[j].push_back(temp[j]);
         }
     }
 
-    chop(cols);
-    while(check_invariant(cols)) {
+    while(check_invariant(cols, c)) {
         cont++;
-        chop(cols);
+        chop(cols, c);
     }
 
     cout << cont << '\n';
