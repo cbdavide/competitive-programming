@@ -1,33 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef pair<int, int> pii;
-typedef vector<pii> vpii;
-
-bool cond(pii a, pii b) {
-  return a.first > b.first;
-}
+typedef vector<int> vi;
+typedef map<int, vi> mapa;
 
 int main() {
-  int t, cod, pro, k = 0;
+  int t, cod, pro, k = 0, maxi;
 
   while(cin >> t && t) {
-    vpii arr(t);
-
+    mapa mapita;
+    maxi = 0;
     for(int i=0; i<t; i++) {
       cin >> cod >> pro;
-      arr[i] = pii(pro, cod);
+      maxi = max(maxi, pro);
+      mapita[pro].push_back(cod);
     }
 
-    sort(arr.begin(), arr.end(), cond);
+    vi value = mapita[maxi];
 
-    int i = 1;
     cout << "Turma " << ++k << '\n';
-    cout << arr[0].second << " ";
-    while(arr[0].first == arr[i].first && i < arr.size()) {
-      cout << arr[i].second << " ";
-      i++;
-    }
+    for(int i=0; i<value.size(); i++)
+        cout << value[i] << ' ';
+
     cout << "\n\n";
   }
   return 0;
