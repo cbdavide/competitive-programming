@@ -22,6 +22,7 @@ void dijkstra(int n, int s, int tgt, vii *adj) {
     pq.insert(s);
     while(!pq.empty()) {
         int curr = *pq.begin(); pq.erase(pq.begin());
+        if(curr == tgt) return;
         for(int i=0; i<adj[curr].size(); i++) {
             int nxt = adj[curr][i].first,
                 ndist = dist[curr] + adj[curr][i].second;
