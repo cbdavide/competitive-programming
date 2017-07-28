@@ -3,7 +3,7 @@ using namespace std;
 
 #define INF 1e9
 
-int T[(int)1e7 + 7];
+int T[(int)2e7 + 7];
 
 int f(int n) {
     if(n == 1) return 0;
@@ -18,7 +18,7 @@ int f(int n) {
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    memset(T, 0, sizeof(int) * (1e7 + 7));
+    memset(T, 0, sizeof(int) * (2e7 + 7));
     int t, n;
     cin >> t;
     T[1] = 0; T[2] = 1; T[3] = 1;
