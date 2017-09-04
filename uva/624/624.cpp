@@ -33,7 +33,7 @@ int main() {
         for(int i=0; i<n; i++) cin >> T[i];
         backtrack(0, 0, n, capacity);
         for(int i=0; i<n; i++) if(cp[i]) cout << cp[i] << ' ';
-        cout << "sum: " << best << '\n';
+        cout << "sum:" << best << '\n';
 
     }
     return 0;
