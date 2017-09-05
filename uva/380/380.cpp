@@ -15,13 +15,10 @@ string add(string a, string b) {
 string backtrack(msvs &T, msb &vis, string tim, string source) {
     if(vis[source]) return "9999";
     vis[source] = true;
-    bool cond = false;
     for(int i=0; i<T[source].size(); i++) {
         string to = add(T[source][i][0], T[source][i][1]);
-        if(tim >= T[source][i][0] && tim <= to) {
+        if(tim >= T[source][i][0] && tim <= to) 
             return backtrack(T, vis, tim, T[source][i][2]);
-            cond = true;
-        }
     }
     return source;
 }
