@@ -25,44 +25,43 @@ const double EPS = 1e-9;
 const double PI = acos(-1);
 
 bool cmp(string a, string b) {
-	char last = a.back();
-	a.insert(a.begin(), last);
-	a.pop_back(); 
-	return a == b;
+    char last = a.back();
+    a.insert(a.begin(), last);
+    a.pop_back(); 
+    return a == b;
 }
 
 vs chop(string word, int s) {
-	
-	int i=0; vs chops;
-	while(i < size(word)) {
-		chops.push_back(word.substr(i, s));
-		i += s;
-	}
-	return chops;
+    int i=0; vs chops;
+    while(i < size(word)) {
+        chops.push_back(word.substr(i, s));
+        i += s;
+    }
+    return chops;
 }
 
 
 bool check(string word, int s) {
-	vs chops = chop(word, s);
-	rep(i, 0, size(chops) - 1) {
-		if(!cmp(chops[i], chops[i + 1]))
-			return false;
-	}
-	return true;
+    vs chops = chop(word, s);
+    rep(i, 0, size(chops) - 1) {
+        if(!cmp(chops[i], chops[i + 1]))
+            return false;
+    }
+    return true;
 }
 
 int main() {
-	string line;
-	while(cin >> line) {
-		bool cond = false;
-		rep(i, 1, size(line)) {
-			if(!(size(line) % i) && check(line, i)) {
-				cout << i << endl;
-				cond = true; i = INF;
-			}
-		}
-		if(!cond) cout << size(line) << endl;
-	}
-	return 0;
+    string line;
+    while(cin >> line) {
+        bool cond = false;
+        rep(i, 1, size(line)) {
+            if(!(size(line) % i) && check(line, i)) {
+                cout << i << endl;
+                cond = true; i = INF;
+            }
+        }
+        if(!cond) cout << size(line) << endl;
+    }
+    return 0;
 }
 
