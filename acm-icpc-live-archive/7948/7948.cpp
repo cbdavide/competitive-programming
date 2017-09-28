@@ -32,6 +32,7 @@ bool cmp(string a, string b) {
 }
 
 vs chop(string word, int s) {
+	
 	int i=0; vs chops;
 	while(i < size(word)) {
 		chops.push_back(word.substr(i, s));
