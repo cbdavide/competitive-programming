@@ -21,11 +21,9 @@ vsi build_graph(int size, mcvi &T) {
 
     for(int i=1; i<tplt.size(); i++) {
         for(int j : T[tplt[i]]) {
-            //cout << j << ' ';
             for(int k : T[tplt[i - 1]]) {
                 if(k > j) break;
                 G[k].insert(j);
-                // cout << k << " -> " << j << endl;
             }
         }
     }
